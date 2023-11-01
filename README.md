@@ -11,7 +11,7 @@ To use this module in your Terraform configuration, follow these steps:
 Clone the repository to your local machine or reference it remotely if it's hosted elsewhere:
 
 ```
-git clone <repository_url>
+git clone https://github.com/drata/terraform-gcp-drata-autopilot-role
 ```
 
 ### Initialize Terraform:
