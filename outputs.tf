@@ -1,8 +1,4 @@
-# TODO: Remove this and add your own outputs
-output "nope" {
-  value = null_resource.nope.id
-}
-
-output "true" {
-  value = true
+output "service_account_email" {
+  description = "The email address of the created service account."
+  value       = google_service_account.drata.email
 }

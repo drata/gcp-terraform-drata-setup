@@ -1,6 +1,15 @@
-# TODO: Add your own input variables
-variable "this" {
-  type        = str
-  description = "Replace me with a real variable."
-  default     = "nope"
+variable "project" {
+  description = "The Google Cloud project ID where resources will be created."
+  type        = string
+}
+
+variable "org_id" {
+  description = "The Google Cloud organization ID."
+  type        = string
+}
+
+variable "region" {
+  description = "The Google Cloud region where resources will be created."
+  type        = string
+  default     = "us-central1"
 }
