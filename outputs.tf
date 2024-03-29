@@ -1,8 +1,5 @@
-# TODO: Remove this and add your own outputs
-output "nope" {
-  value = null_resource.nope.id
-}
-
-output "true" {
-  value = true
+output "drata_service_account_key" {
+  value       = base64decode(google_service_account_key.drata_key.private_key)
+  description = "Service Account Key"
+  sensitive   = true
 }
