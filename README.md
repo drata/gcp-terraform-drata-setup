@@ -41,7 +41,7 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 8. Run `terraform apply` and **IMPORTANT** review the plan output before typing `yes`.
 9. If successful, run the command to generate the json key file 
      - `terraform output -raw drata_service_account_key > drata-gcp-private-key.json` .
-11. Verify the file is created in your end.
+11. Verify the file has been generated.
 12. Go to the GCP connection drawer and select Upload File to upload the `drata-gcp-private-key.json` file.
 13. Select the `Save & Test Connection` button.
 
