@@ -36,7 +36,7 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 3. Replace `main` in `ref=main` with the latest version from the [releases page](https://github.com/drata/gcp-terraform-drata-setup/releases).
 4. Replace `YOUR_ORGANIZATION_DOMAIN` with the GCP organization domain.
 5. You could replace `YOUR_PROJECT_ID` with the project ID optionally otherwise the default project is utilized.
-6. `drata_role_name` could also be replaced otherwise the default name is `DrataReadOnly`.
+6. Replace the given `drata_role_name` if you don't want the role added to be the default: `DrataReadOnly`.
 7. Back in your terminal, run `terraform init` to download/update the module.
 8. Run `terraform apply` and **IMPORTANT** review the plan output before typing `yes`.
 9. If successful, run the command to generate the json key file 
