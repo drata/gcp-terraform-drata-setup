@@ -39,10 +39,10 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 6. `drata_role_name` could also be replaced otherwise the default name is `DrataReadOnly`.
 7. Back in your terminal, run `terraform init` to download/update the module.
 8. Run `terraform apply` and **IMPORTANT** review the plan output before typing `yes`.
-9. If success, run the command to generate the json key file 
+9. If successful, run the command to generate the json key file 
      - `terraform output -raw drata_service_account_key > drata-gcp-private-key.json` .
 11. Verify the file is created in your end.
-12. Go to the GCP connection drawer for user access review and select Upload File to upload the `drata-gcp-private-key.json` file.
+12. Go to the GCP connection drawer and select Upload File to upload the `drata-gcp-private-key.json` file.
 13. Select the `Save & Test Connection` button.
 
 <!-- BEGIN_TF_DOCS -->
