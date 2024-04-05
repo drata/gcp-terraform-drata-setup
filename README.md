@@ -2,7 +2,7 @@
 
 GCP terraform module to create the Drata Read Only service account.
 
-## Usage
+## Example Usage
 
 The example below uses `ref=main` (which is appended in the URL),  but it is recommended to use a specific tag version (i.e. `ref=1.0.0`) to avoid breaking changes. Go to the release page for a list of published versions. [releases page](https://github.com/drata/gcp-terraform-drata-setup/releases) for a list of published versions.
 
