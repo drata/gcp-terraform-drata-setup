@@ -1,7 +1,10 @@
 terraform {
-  required_version = ">= 0.15"
+  required_version = ">= 0.13.0"
 
   required_providers {
-    # TODO: define the providers required by this module
+    google = {
+      source  = "hashicorp/google"
+      version = "5.16.0"
+    }
   }
 }
