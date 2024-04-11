@@ -52,21 +52,28 @@ resource "google_service_account_key" "drata_key" {
 }
 
 # assignation of roles to the service account
-# project role
+# project custom role
 resource "google_project_iam_member" "drata_member_project_role" {
   project = local.PROJECT_ID
   role    = google_project_iam_custom_role.drata_project_role.name
   member  = "serviceAccount:${google_service_account.drata.email}"
 }
-# organization role
+# organization custom role
 resource "google_organization_iam_member" "organization" {
   org_id = data.google_organization.gcp_organization.org_id
   role   = google_organization_iam_custom_role.drata_org_role.name
   member = "serviceAccount:${google_service_account.drata.email}"
 }
-# viewer role
-resource "google_project_iam_member" "drata_viewer_role" {
+# project viewer role
+resource "google_project_iam_member" "drata_project_viewer_role" {
   project = local.PROJECT_ID
   role    = "roles/viewer"
   member  = "serviceAccount:${google_service_account.drata.email}"
+}
+# organization viewer role
+resource "google_organization_iam_member" "drata_organization_viewer_role" {
+  org_id = data.google_organization.gcp_organization.org_id
+  role   = "roles/viewer"
+  member = "serviceAccount:${google_service_account.drata.email}"
+  count  = var.organization_access ? 1 : 0
 }
