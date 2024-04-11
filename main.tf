@@ -35,7 +35,7 @@ resource "google_organization_iam_custom_role" "drata_org_role" {
   role_id     = "${var.drata_role_name}OrganizationalRole"
   title       = "Drata Read-Only Organizational Role"
   description = "Service Account with read-only access for Drata Autopilot to get organizational IAM data"
-  permissions = ["resourcemanager.organizations.getIamPolicy", "storage.buckets.get", "storage.buckets.getIamPolicy"]
+  permissions = ["resourcemanager.organizations.getIamPolicy", "storage.buckets.get", "storage.buckets.getIamPolicy", "resourcemanager.folders.get", "resourcemanager.organizations.get"]
   org_id      = data.google_organization.gcp_organization.org_id
 }
 
