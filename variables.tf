@@ -9,9 +9,9 @@ variable "gcp_org_domain" {
   description = "GCP Organization domain."
 }
 
-variable "organization_access" {
+variable "connect_multiple_projects" {
   type        = bool
-  description = "Tells the service account whether it can see the entire organization or not."
+  description = "Tells the service account whether it can see all the projects or not."
   default     = true
 }
 

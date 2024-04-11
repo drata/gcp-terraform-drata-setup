@@ -75,5 +75,5 @@ resource "google_organization_iam_member" "drata_organization_viewer_role" {
   org_id = data.google_organization.gcp_organization.org_id
   role   = "roles/viewer"
   member = "serviceAccount:${google_service_account.drata.email}"
-  count  = var.organization_access ? 1 : 0
+  count  = var.connect_multiple_projects ? 1 : 0
 }
