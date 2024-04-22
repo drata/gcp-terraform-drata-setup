@@ -35,7 +35,7 @@ resource "google_organization_iam_custom_role" "drata_org_role" {
   role_id     = "${var.drata_role_name}OrganizationalRole"
   title       = "Drata Read-Only Organizational Role"
   description = "Service Account with read-only access for Drata Autopilot to get organizational IAM data"
-  permissions = ["resourcemanager.organizations.getIamPolicy", "storage.buckets.get", "storage.buckets.getIamPolicy"]
+  permissions = ["resourcemanager.organizations.getIamPolicy", "storage.buckets.get", "storage.buckets.getIamPolicy", "resourcemanager.folders.get", "resourcemanager.organizations.get"]
   org_id      = data.google_organization.gcp_organization.org_id
 }
 
@@ -52,21 +52,28 @@ resource "google_service_account_key" "drata_key" {
 }
 
 # assignation of roles to the service account
-# project role
+# project custom role
 resource "google_project_iam_member" "drata_member_project_role" {
   project = local.PROJECT_ID
   role    = google_project_iam_custom_role.drata_project_role.name
   member  = "serviceAccount:${google_service_account.drata.email}"
 }
-# organization role
+# organization custom role
 resource "google_organization_iam_member" "organization" {
   org_id = data.google_organization.gcp_organization.org_id
   role   = google_organization_iam_custom_role.drata_org_role.name
   member = "serviceAccount:${google_service_account.drata.email}"
 }
-# viewer role
-resource "google_project_iam_member" "drata_viewer_role" {
+# project viewer role
+resource "google_project_iam_member" "drata_project_viewer_role" {
   project = local.PROJECT_ID
   role    = "roles/viewer"
   member  = "serviceAccount:${google_service_account.drata.email}"
+}
+# organization viewer role
+resource "google_organization_iam_member" "drata_organization_viewer_role" {
+  count  = var.connect_multiple_projects ? 1 : 0
+  org_id = data.google_organization.gcp_organization.org_id
+  role   = "roles/viewer"
+  member = "serviceAccount:${google_service_account.drata.email}"
 }
