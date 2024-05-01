@@ -89,7 +89,7 @@ No modules.
 | <a name="input_drata_role_name"></a> [drata\_role\_name](#input\_drata\_role\_name) | Role name. | `string` | `"DrataReadOnly"` | no |
 | <a name="input_gcp_org_domain"></a> [gcp\_org\_domain](#input\_gcp\_org\_domain) | GCP Organization domain. | `string` | n/a | yes |
 | <a name="input_gcp_project_id"></a> [gcp\_project\_id](#input\_gcp\_project\_id) | Project identifier of the gcp organization. If it is not provided, the provider project is used. | `string` | `null` | no |
-| <a name="input_gcp_services"></a> [gcp\_services](#input\_gcp\_services) | List of services to enable. | `list(string)` | <pre>[<br>  "cloudresourcemanager.googleapis.com",<br>  "compute.googleapis.com",<br>  "admin.googleapis.com",<br>  "sqladmin.googleapis.com",<br>  "monitoring.googleapis.com"<br>]</pre> | no |
+| <a name="input_gcp_services"></a> [gcp\_services](#input\_gcp\_services) | List of services to enable. | `list(string)` | <pre>[<br>  "cloudresourcemanager.googleapis.com",<br>  "compute.googleapis.com",<br>  "admin.googleapis.com",<br>  "sqladmin.googleapis.com",<br>  "monitoring.googleapis.com",<br>  "cloudasset.googleapis.com"<br>]</pre> | no |
 
 ## Outputs
 
