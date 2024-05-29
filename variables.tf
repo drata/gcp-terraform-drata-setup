@@ -17,7 +17,7 @@ variable "connect_multiple_projects" {
 
 variable "gcp_services" {
   type        = list(string)
-  default     = ["cloudresourcemanager.googleapis.com", "compute.googleapis.com", "admin.googleapis.com", "sqladmin.googleapis.com", "monitoring.googleapis.com"]
+  default     = ["cloudresourcemanager.googleapis.com", "compute.googleapis.com", "admin.googleapis.com", "sqladmin.googleapis.com", "monitoring.googleapis.com", "cloudasset.googleapis.com"]
   description = "List of services to enable."
 }
 
