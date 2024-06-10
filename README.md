@@ -32,7 +32,7 @@ terraform output -raw drata_service_account_key > drata-gcp-private-key.json
 
 1. Fixing `FAILED_PRECONDITION: Key creation is not allowed on this service account (type: constraints/iam.disableServiceAccountKeyCreation)` issue.
    * Go to the [IAM Organization Policies](https://console.cloud.google.com/iam-admin/orgpolicies) page.
-   * Make sure the project where the service account will be stored is selected top left in the console.
+   * Make sure the project where the service account will be stored is selected (top left in the console).
    * Type `Disable service account key creation` on the `🔽 Filter` bar and select the policy.
    * Click over `📝 MANAGE POLICY` button.
    * Go to `Policy source` and select the `Override parent's policy` option.
