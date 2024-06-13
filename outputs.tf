@@ -3,3 +3,8 @@ output "drata_service_account_key" {
   description = "Service Account Key"
   sensitive   = true
 }
+
+output "drata_service_account_email" {
+  value       = google_service_account.drata.email
+  description = "Service Account Object"
+}
