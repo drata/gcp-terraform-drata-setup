@@ -5,6 +5,6 @@ output "drata_service_account_key" {
 }
 
 output "drata_service_account" {
-  value       = google_service_account.drata
+  value       = google_service_account.drata.email
   description = "Service Account Object"
 }
