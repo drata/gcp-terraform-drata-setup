@@ -4,7 +4,7 @@ output "drata_service_account_key" {
   sensitive   = true
 }
 
-output "drata_service_account" {
+output "drata_service_account_email" {
   value       = google_service_account.drata.email
   description = "Service Account Object"
 }
