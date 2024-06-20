@@ -2,6 +2,16 @@
 
 GCP terraform module to create the Drata Read Only service account.
 
+# Pre requirements
+
+Make sure the service account that is will run this terraform script has the following roles granted.
+* Organization Administrator
+* Organization Policy Administrator
+* Organization Role Administrator
+* Service Account Admin
+* Service Account Key Admin
+* Service Usage Admin
+
 ## Example Usage
 
 The example below uses `ref=main` (which is appended in the URL),  but it is recommended to use a specific tag version (i.e. `ref=1.0.0`) to avoid breaking changes. Go to the release page for a list of published versions. [releases page](https://github.com/drata/gcp-terraform-drata-setup/releases) for a list of published versions.
@@ -28,6 +38,19 @@ After you apply this terraform, run the following command to retrieve the key fi
 terraform output -raw drata_service_account_key > drata-gcp-private-key.json
 ```
 
+## Troubleshooting
+
+1. Fixing `FAILED_PRECONDITION: Key creation is not allowed on this service account (type: constraints/iam.disableServiceAccountKeyCreation)` issue.
+   * Go to the [IAM Organization Policies](https://console.cloud.google.com/iam-admin/orgpolicies) page.
+   * Make sure the project where the service account will be stored is selected top left in the console.
+   * Type `Disable service account key creation` on the `🔽 Filter` bar and select the policy.
+   * Click over `📝 MANAGE POLICY` button.
+   * Go to `Policy source` and select the `Override parent's policy` option.
+   * Scroll down a little and open up the `Enforced` rule.
+   * Make sure the `Enforcement` section is `Off`.
+   * Click `SET POLICY` to save changes.
+   * Run this script again.
+
 ## Setup
 
 The following steps demonstrate how to connect GCP in Drata when using this terraform module.
@@ -46,19 +69,6 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 11. Verify the file has been generated.
 12. Go to the GCP connection drawer and select Upload File to upload the `drata-gcp-private-key.json` file.
 13. Select the `Save & Test Connection` button.
-
-## Troubleshooting ⚠️
-
-1. Fixing `FAILED_PRECONDITION: Key creation is not allowed on this service account (type: constraints/iam.disableServiceAccountKeyCreation)` issue.
-   * Go to the [IAM Organization Policies](https://console.cloud.google.com/iam-admin/orgpolicies) page.
-   * Make sure the project where the service account will be stored is selected (top left in the console).
-   * Type `Disable service account key creation` on the `🔽 Filter` bar and select the policy.
-   * Click over `📝 MANAGE POLICY` button.
-   * Go to `Policy source` and select the `Override parent's policy` option.
-   * Scroll down a little and open up the `Enforced` rule.
-   * Make sure the `Enforcement` section is `Off`.
-   * Click `SET POLICY` to save changes.
-   * Run this script again.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
