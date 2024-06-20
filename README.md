@@ -4,7 +4,7 @@ GCP terraform module to create the Drata Read Only service account.
 
 # Pre requirements
 
-Make sure the service account that is will run this terraform script has the following roles granted.
+Make sure the service account that will run this terraform script has the following roles granted.
 * Organization Administrator
 * Organization Policy Administrator
 * Organization Role Administrator
