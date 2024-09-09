@@ -23,7 +23,8 @@ resource "google_project_service" "services" {
 
 # create project custom role
 resource "google_project_iam_custom_role" "drata_project_role" {
-  role_id     = "${var.drata_role_name}ProjectRole"
+  # role_id     = "${var.drata_role_name}ProjectRole"
+  role_id     = format("%s%sProjectRole", var.gcp_project_id, var.drata_role_name)
   title       = "Drata Read-Only Project Role"
   description = "Service Account for Drata Autopilot to get read access to all project resources"
   permissions = ["storage.buckets.get", "storage.buckets.getIamPolicy"]
@@ -32,7 +33,7 @@ resource "google_project_iam_custom_role" "drata_project_role" {
 
 # create organizational role
 resource "google_organization_iam_custom_role" "drata_org_role" {
-  role_id     = "${var.drata_role_name}OrganizationalRole"
+  role_id     = format("%s%sOrganizationalRole", var.gcp_project_id, var.drata_role_name)
   title       = "Drata Read-Only Organizational Role"
   description = "Service Account with read-only access for Drata Autopilot to get organizational IAM data"
   permissions = ["resourcemanager.organizations.getIamPolicy", "storage.buckets.get", "storage.buckets.getIamPolicy", "resourcemanager.folders.get", "resourcemanager.organizations.get", "cloudasset.assets.searchAllResources"]
@@ -42,7 +43,7 @@ resource "google_organization_iam_custom_role" "drata_org_role" {
 # creation of the service account
 resource "google_service_account" "drata" {
   account_id   = lower(var.drata_role_name)
-  display_name = "dratareadonly"
+  display_name = format("%sdratareadonly", var.gcp_project_id)
   project      = local.PROJECT_ID
 }
 
