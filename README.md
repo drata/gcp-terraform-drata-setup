@@ -76,13 +76,13 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | 5.16.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 5.16.0, < 8.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 5.16.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 5.16.0, < 8.0.0 |
 
 ## Modules
 
@@ -92,17 +92,17 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [google_organization_iam_custom_role.drata_org_role](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/organization_iam_custom_role) | resource |
-| [google_organization_iam_member.drata_organization_viewer_role](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/organization_iam_member) | resource |
-| [google_organization_iam_member.organization](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/organization_iam_member) | resource |
-| [google_project_iam_custom_role.drata_project_role](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/project_iam_custom_role) | resource |
-| [google_project_iam_member.drata_member_project_role](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/project_iam_member) | resource |
-| [google_project_iam_member.drata_project_viewer_role](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/project_iam_member) | resource |
-| [google_project_service.services](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/project_service) | resource |
-| [google_service_account.drata](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/service_account) | resource |
-| [google_service_account_key.drata_key](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/resources/service_account_key) | resource |
-| [google_organization.gcp_organization](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/data-sources/organization) | data source |
-| [google_project.gcp_project](https://registry.terraform.io/providers/hashicorp/google/5.16.0/docs/data-sources/project) | data source |
+| [google_organization_iam_custom_role.drata_org_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/organization_iam_custom_role) | resource |
+| [google_organization_iam_member.drata_organization_viewer_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/organization_iam_member) | resource |
+| [google_organization_iam_member.organization](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/organization_iam_member) | resource |
+| [google_project_iam_custom_role.drata_project_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_custom_role) | resource |
+| [google_project_iam_member.drata_member_project_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_iam_member.drata_project_viewer_role](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_service.services](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
+| [google_service_account.drata](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
+| [google_service_account_key.drata_key](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_key) | resource |
+| [google_organization.gcp_organization](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/organization) | data source |
+| [google_project.gcp_project](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
 
 ## Inputs
 
