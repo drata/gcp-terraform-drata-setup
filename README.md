@@ -87,7 +87,7 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 7.24.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 5.16.0, < 8.0.0 |
 
 ## Modules
 
