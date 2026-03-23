@@ -26,3 +26,9 @@ variable "drata_role_name" {
   description = "Role name."
   default     = "DrataReadOnly"
 }
+
+variable "create_service_account_key" {
+  type        = bool
+  description = "Whether to create a service account key and expose it as an output. Set to false when the key will be created manually outside of Terraform to avoid storing credentials in state."
+  default     = true
+}
