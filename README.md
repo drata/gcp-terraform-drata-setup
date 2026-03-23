@@ -24,6 +24,7 @@ module "service_account_creation" {
   # gcp_project_id = "YOUR_PROJECT_ID" # if it's unset, the project by default is used
   # drata_role_name = "YOUR_ROLE_NAME" # if it's unset, the default name is DrataReadOnly
   # connect_multiple_projects = false # if it's unset, the default value is true
+  # create_service_account_key = false # if set to false, the key will not be created by Terraform. Create it manually in GCP Console and provide it to Drata directly.
 }
 
 output "drata_service_account_key" {
@@ -37,6 +38,8 @@ After you apply this terraform, run the following command to retrieve the key fi
 ```
 terraform output -raw drata_service_account_key > drata-gcp-private-key.json
 ```
+
+> **Note:** If `create_service_account_key` is set to `false`, the key will not be created by Terraform and the output above will be empty. In this case, create the key manually in the [GCP Console](https://console.cloud.google.com/iam-admin/serviceaccounts) and upload it directly to Drata.
 
 ## Troubleshooting
 
@@ -62,13 +65,15 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 5. Replace `YOUR_PROJECT_ID` if the desired project is not the default project in your organization.
 6. Replace the given `drata_role_name` if you don't want the role added to be the default: `DrataReadOnly`.
 7. If you don't wish to connect multiple projects to Drata the `connect_multiple_projects` variable must be `false` otherwise `true` or unset.
-8. Back in your terminal, run `terraform init` to download/update the module.
-9. Run `terraform apply` and **IMPORTANT** review the plan output before typing `yes`.
-10. If successful, run the command to generate the json key file 
-     - `terraform output -raw drata_service_account_key > drata-gcp-private-key.json` .
-11. Verify the file has been generated.
-12. Go to the GCP connection drawer and select Upload File to upload the `drata-gcp-private-key.json` file.
-13. Select the `Save & Test Connection` button.
+8. Set `create_service_account_key = false` if you prefer to create the service account key manually outside of Terraform to avoid storing credentials in Terraform state. Otherwise leave it unset (defaults to `true`).
+9. Back in your terminal, run `terraform init` to download/update the module.
+10. Run `terraform apply` and **IMPORTANT** review the plan output before typing `yes`.
+11. If `create_service_account_key` is `true` (default), run the following command to retrieve the key file:
+     - `terraform output -raw drata_service_account_key > drata-gcp-private-key.json`
+12. If `create_service_account_key` is `false`, create the key manually in the [GCP Console](https://console.cloud.google.com/iam-admin/serviceaccounts), download the JSON key file, and rename it `drata-gcp-private-key.json`.
+13. Verify the file has been generated.
+14. Go to the GCP connection drawer and select Upload File to upload the `drata-gcp-private-key.json` file.
+15. Select the `Save & Test Connection` button.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -76,13 +81,13 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 5.16.0, < 8.0.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >=5.16.0, <8.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 5.16.0, < 8.0.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 7.24.0 |
 
 ## Modules
 
@@ -109,14 +114,15 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_connect_multiple_projects"></a> [connect\_multiple\_projects](#input\_connect\_multiple\_projects) | Tells the service account whether it can see all the projects or not. | `bool` | `true` | no |
+| <a name="input_create_service_account_key"></a> [create\_service\_account\_key](#input\_create\_service\_account\_key) | Whether to create a service account key and expose it as an output. Set to false when the key will be created manually outside of Terraform to avoid storing credentials in state. | `bool` | `true` | no |
 | <a name="input_drata_role_name"></a> [drata\_role\_name](#input\_drata\_role\_name) | Role name. | `string` | `"DrataReadOnly"` | no |
 | <a name="input_gcp_org_domain"></a> [gcp\_org\_domain](#input\_gcp\_org\_domain) | GCP Organization domain. | `string` | n/a | yes |
 | <a name="input_gcp_project_id"></a> [gcp\_project\_id](#input\_gcp\_project\_id) | Project identifier of the gcp organization. If it is not provided, the provider project is used. | `string` | `null` | no |
-| <a name="input_gcp_services"></a> [gcp\_services](#input\_gcp\_services) | List of services to enable. | `list(string)` | <pre>[<br>  "cloudresourcemanager.googleapis.com",<br>  "compute.googleapis.com",<br>  "admin.googleapis.com",<br>  "sqladmin.googleapis.com",<br>  "monitoring.googleapis.com",<br>  "cloudasset.googleapis.com"<br>]</pre> | no |
+| <a name="input_gcp_services"></a> [gcp\_services](#input\_gcp\_services) | List of services to enable. | `list(string)` | <pre>[<br/>  "cloudresourcemanager.googleapis.com",<br/>  "compute.googleapis.com",<br/>  "admin.googleapis.com",<br/>  "sqladmin.googleapis.com",<br/>  "monitoring.googleapis.com",<br/>  "cloudasset.googleapis.com"<br/>]</pre> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_drata_service_account_key"></a> [drata\_service\_account\_key](#output\_drata\_service\_account\_key) | Service Account Key |
+| <a name="output_drata_service_account_key"></a> [drata\_service\_account\_key](#output\_drata\_service\_account\_key) | Service Account Key. Only populated when create\_service\_account\_key is true. When false, create the key manually in GCP Console and provide it to Drata directly. |
 <!-- END_TF_DOCS -->
