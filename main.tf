@@ -47,7 +47,11 @@ resource "google_service_account" "drata" {
 }
 
 # create json key file
+# Set create_service_account_key = false to skip key creation and avoid storing
+# credentials in Terraform state. The key can then be created manually in the
+# GCP Console and provided to Drata directly.
 resource "google_service_account_key" "drata_key" {
+  count              = var.create_service_account_key ? 1 : 0
   service_account_id = google_service_account.drata.id
 }
 
