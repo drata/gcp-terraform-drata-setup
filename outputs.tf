@@ -3,3 +3,8 @@ output "drata_service_account_key" {
   description = "Service Account Key. Only populated when create_service_account_key is true. When false, create the key outside terraform and provide it to Drata directly."
   sensitive   = true
 }
+
+output "drata_service_account_email" {
+  value       = google_service_account.drata.email
+  description = "Service Account Object"
+}
