@@ -11,6 +11,11 @@ data "google_organization" "gcp_organization" {
 # set project id in local variable
 locals {
   PROJECT_ID = var.gcp_project_id == null ? data.google_project.gcp_project[0].project_id : var.gcp_project_id
+  # Reading every project's IAM policy lets Drata sync IAM users from all projects, so it is opt-in
+  ORG_ROLE_PERMISSIONS = concat(
+    ["resourcemanager.organizations.getIamPolicy", "storage.buckets.get", "storage.buckets.getIamPolicy", "resourcemanager.folders.get", "resourcemanager.organizations.get", "cloudasset.assets.searchAllResources"],
+    var.sync_all_projects_users ? ["resourcemanager.projects.get", "resourcemanager.projects.list", "resourcemanager.projects.getIamPolicy"] : []
+  )
 }
 
 # enable services
@@ -35,7 +40,7 @@ resource "google_organization_iam_custom_role" "drata_org_role" {
   role_id     = "${var.drata_role_name}OrganizationalRole"
   title       = "Drata Read-Only Organizational Role"
   description = "Service Account with read-only access for Drata Autopilot to get organizational IAM data"
-  permissions = ["resourcemanager.organizations.getIamPolicy", "storage.buckets.get", "storage.buckets.getIamPolicy", "resourcemanager.folders.get", "resourcemanager.organizations.get", "cloudasset.assets.searchAllResources"]
+  permissions = local.ORG_ROLE_PERMISSIONS
   org_id      = data.google_organization.gcp_organization.org_id
 }
 
