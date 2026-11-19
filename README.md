@@ -25,6 +25,7 @@ module "service_account_creation" {
   # drata_role_name = "YOUR_ROLE_NAME" # if it's unset, the default name is DrataReadOnly
   # connect_multiple_projects = false # if it's unset, the default value is true
   # create_service_account_key = false # if set to false, the key will not be created by Terraform. Create it manually in GCP Console and provide it to Drata directly.
+  # sync_all_projects_users = true # if set to true, Drata can sync IAM users from all projects in the organization for access reviews. If it's unset, the default value is false
 }
 
 output "drata_service_account_key" {
@@ -78,14 +79,16 @@ The following steps demonstrate how to connect GCP in Drata when using this terr
 6. Replace the given `drata_role_name` if you don't want the role added to be the default: `DrataReadOnly`.
 7. If you don't wish to connect multiple projects to Drata the `connect_multiple_projects` variable must be `false` otherwise `true` or unset.
 8. Set `create_service_account_key = false` if you prefer to create the service account key manually outside of Terraform to avoid storing credentials in Terraform state. Otherwise leave it unset (defaults to `true`).
-9. Back in your terminal, run `terraform init` to download/update the module.
-10. Run `terraform apply` and **IMPORTANT** review the plan output before typing `yes`.
-11. If `create_service_account_key` is `true` (default), run the following command to retrieve the key file:
+9. Set `sync_all_projects_users = true` if Drata should sync IAM users from all projects in the organization for access reviews. This adds `resourcemanager.projects.get`, `resourcemanager.projects.list` and `resourcemanager.projects.getIamPolicy` to the organization role, so the service account can read the IAM policy of every project. Leave it unset (defaults to `false`) to sync IAM users from the organization and the service account's project only.
+10. Back in your terminal, run `terraform init` to download/update the module.
+11. Run `terraform apply` and **IMPORTANT** review the plan output before typing `yes`.
+12. If `create_service_account_key` is `true` (default), run the following command to retrieve the key file:
      - `terraform output -raw drata_service_account_key > drata-gcp-private-key.json`
-12. If `create_service_account_key` is `false`, create the key manually in the [GCP Console](https://console.cloud.google.com/iam-admin/serviceaccounts), download the JSON key file, and rename it `drata-gcp-private-key.json`.
-13. Verify the file has been generated.
-14. Go to the GCP connection drawer and select Upload File to upload the `drata-gcp-private-key.json` file.
-15. Select the `Save & Test Connection` button.
+13. If `create_service_account_key` is `false`, create the key manually in the [GCP Console](https://console.cloud.google.com/iam-admin/serviceaccounts), download the JSON key file, and rename it `drata-gcp-private-key.json`.
+14. Verify the file has been generated.
+15. Go to the GCP connection drawer and select Upload File to upload the `drata-gcp-private-key.json` file.
+16. Select the `Save & Test Connection` button.
+17. If `sync_all_projects_users` is `true`, turn on `Sync IAM users from all projects in the organization` on the GCP connection in Drata.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -131,10 +134,12 @@ No modules.
 | <a name="input_gcp_org_domain"></a> [gcp\_org\_domain](#input\_gcp\_org\_domain) | GCP Organization domain. | `string` | n/a | yes |
 | <a name="input_gcp_project_id"></a> [gcp\_project\_id](#input\_gcp\_project\_id) | Project identifier of the gcp organization. If it is not provided, the provider project is used. | `string` | `null` | no |
 | <a name="input_gcp_services"></a> [gcp\_services](#input\_gcp\_services) | List of services to enable. | `list(string)` | <pre>[<br/>  "cloudresourcemanager.googleapis.com",<br/>  "compute.googleapis.com",<br/>  "admin.googleapis.com",<br/>  "sqladmin.googleapis.com",<br/>  "monitoring.googleapis.com",<br/>  "cloudasset.googleapis.com"<br/>]</pre> | no |
+| <a name="input_sync_all_projects_users"></a> [sync\_all\_projects\_users](#input\_sync\_all\_projects\_users) | Lets the service account read the IAM policy of every project in the organization, so Drata can sync IAM users from all projects for access reviews. Also turn on 'Sync IAM users from all projects in the organization' on the GCP connection in Drata. | `bool` | `false` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_drata_service_account_key"></a> [drata\_service\_account\_key](#output\_drata\_service\_account\_key) | Service Account Key. Only populated when create\_service\_account\_key is true. When false, create the key manually in GCP Console and provide it to Drata directly. |
+| <a name="output_sync_all_projects_users"></a> [sync\_all\_projects\_users](#output\_sync\_all\_projects\_users) | Whether the service account can read every project's IAM policy. When true, turn on 'Sync IAM users from all projects in the organization' on the GCP connection in Drata. |
 <!-- END_TF_DOCS -->

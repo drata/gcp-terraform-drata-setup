@@ -15,6 +15,12 @@ variable "connect_multiple_projects" {
   default     = true
 }
 
+variable "sync_all_projects_users" {
+  type        = bool
+  description = "Lets the service account read the IAM policy of every project in the organization, so Drata can sync IAM users from all projects for access reviews. Also turn on 'Sync IAM users from all projects in the organization' on the GCP connection in Drata."
+  default     = false
+}
+
 variable "gcp_services" {
   type        = list(string)
   default     = ["cloudresourcemanager.googleapis.com", "compute.googleapis.com", "admin.googleapis.com", "sqladmin.googleapis.com", "monitoring.googleapis.com", "cloudasset.googleapis.com"]
